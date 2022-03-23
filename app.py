@@ -12,11 +12,11 @@ ma = Marshmallow(app)
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250))
+    title = db.Column(db.String(250))
     check = db.Column(db.Boolean)
 
-    def __init__(self, name, check):
-        self.name = name
+    def __init__(self, title, check):
+        self.title = title
         self.check = check
 
     def __repr__(self):
@@ -48,11 +48,11 @@ def get_tasks():
 def create_task():
     if not request.json:
         abort(404)
-        
-    name = request.json['name']
+
+    title = request.json['name']
     check = request.json['check']
 
-    new_task = Task(name, check)
+    new_task = Task(title, check)
 
     db.session.add(new_task)
     db.session.commit()
@@ -72,7 +72,7 @@ def update_task(id):
     title = request.json['name']
     check = request.json['check']
 
-    task.name = name
+    task.title = title
     task.check = check
 
     db.session.commit()
